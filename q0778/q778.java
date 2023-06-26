@@ -1,3 +1,4 @@
+package q0778;
 import java.util.PriorityQueue;
 
 class Solution {

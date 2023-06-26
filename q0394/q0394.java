@@ -1,3 +1,4 @@
+package q0394;
 import java.util.Stack;
 
 class Solution {
