@@ -1,21 +1,24 @@
+#include <vector>
+using namespace std;
+
 class Solution
 {
 public:
     int minSubArrayLen(int target, vector<int> &nums)
     {
-        int min_len = INT_MAX;
-        int curr_sum = 0;
+        int minLen = INT_MAX;
+        int currSum = 0;
         int l = 0;
         for (int r = 0; r < nums.size(); r++)
         {
-            curr_sum += nums[r];
-            while (curr_sum >= target)
+            currSum += nums[r];
+            while (currSum >= target)
             {
-                min_len = min(min_len, r - l + 1);
-                curr_sum -= nums[l];
+                minLen = min(minLen, r - l + 1);
+                currSum -= nums[l];
                 l++;
             }
         }
-        return (min_len != INT_MAX) ? min_len : 0;
+        return (minLen != INT_MAX) ? minLen : 0;
     }
 };
