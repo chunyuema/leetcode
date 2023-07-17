@@ -10,8 +10,8 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        Stack<Integer> s1 = new Stack<>();
-        Stack<Integer> s2 = new Stack<>();
+        Deque<Integer> s1 = new ArrayDeque<>();
+        Deque<Integer> s2 = new ArrayDeque<>();
 
         while (l1 != null) {
             s1.push(l1.val);
