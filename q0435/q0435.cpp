@@ -1,6 +1,6 @@
 class Solution
 {
-    static bool endTimeComparator(vector<int> &i1, vector<int> &i2)
+    static bool endTimeComparator(const vector<int> &i1, const vector<int> &i2)
     {
         return i1[1] < i2[1];
     }
