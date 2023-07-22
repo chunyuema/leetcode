@@ -1,14 +1,10 @@
-#include <vector>
-using namespace std;
-
 class Solution
 {
 public:
     int countNegatives(vector<vector<int>> &grid)
     {
         int res = 0;
-        int row_num = grid[0].size();
-        int first_negative_index = row_num - 1;
+        int first_negative_index = grid[0].size() - 1;
         for (auto &row : grid)
         {
             // find the first time a negative element appear in the row
@@ -18,7 +14,7 @@ public:
                 first_negative_index--;
             }
             // update the result
-            res += (row_num - (first_negative_index + 1));
+            res += (row.size() - (first_negative_index + 1));
         }
         return res;
     }
