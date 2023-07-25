@@ -12,15 +12,15 @@ class Solution {
             int currDiff,
             int i) {
         if (currDiff == 0) {
-            res.add(temp);
+            res.add(new ArrayList(temp));
             return;
         }
         for (int j = i; j < candidates.length; j++) {
             int newDiff = currDiff - candidates[j];
             if (newDiff >= 0) {
-                List<Integer> newTemp = new ArrayList<>(temp);
-                newTemp.add(candidates[j]);
-                backtrackHelper(candidates, res, newTemp, newDiff, j);
+                temp.add(candidates[j]);
+                backtrackHelper(candidates, res, temp, newDiff, j);
+                temp.remove(temp.size() - 1);
             }
         }
     }
