@@ -1,32 +1,29 @@
-import java.util.*;
-
 class Solution {
     public String removeDuplicateLetters(String s) {
-        Map<Character, Integer> finalIndexMap = new HashMap<>();
+        Map<Character, Integer> indexMap = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
-            finalIndexMap.put(s.charAt(i), i);
+            indexMap.put(s.charAt(i), i);
         }
 
-        // track the characters that we use to construct the final string
-        Stack<Character> stack = new Stack<>();
-
-        Set<Character> visited = new HashSet<>();
+        Deque<Character> stack = new ArrayDeque<>();
+        Set<Character> set = new HashSet<>();
         for (int i = 0; i < s.length(); i++) {
             char currChar = s.charAt(i);
-            if (!visited.contains(currChar)) {
-                while (!stack.isEmpty() && stack.peek() > currChar && i < finalIndexMap.get(stack.peek())) {
-                    visited.remove(stack.peek());
-                    stack.pop();
+            // only check and try to push the currChar if it is not already on the stack
+            if (!set.contains(currChar)) { // if (!stack.contains(currChar)) {
+                // if the incoming character is smaller than the character currently on the stack, and 
+                // if the character on the stack could appear later, pop that character out as it can be added later
+                // use a while loop for this as we want to repeatedly do so until what is on the stack absolutely has to be there
+                while (!stack.isEmpty() && currChar < stack.peek() && indexMap.get(stack.peek()) > i) {
+                    set.remove(stack.pop()); // stack.pop();
                 }
                 stack.push(currChar);
-                visited.add(currChar);
+                set.add(currChar);
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        while (!stack.isEmpty()) {
-            sb.insert(0, stack.pop());
-        }
-        return sb.toString();
+        while (!stack.isEmpty()) sb.append(stack.pop());
+        return sb.reverse().toString();
     }
 }
