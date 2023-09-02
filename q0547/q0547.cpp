@@ -10,6 +10,7 @@ public:
         int n = isVisited.size();
         for (int i = 0; i < n; i++)
         {
+            // search for other city that is connected with the current city
             if (isConnected[node][i] && !isVisited[i])
             {
                 dfs(i, isConnected, isVisited);
@@ -24,8 +25,10 @@ public:
         vector<bool> isVisited(n);
         for (int i = 0; i < n; i++)
         {
+            // if the city has not been visited, perform dfs starting from the city
             if (!isVisited[i])
             {
+                // add one to the total number of province
                 res++;
                 dfs(i, isConnected, isVisited);
             }
