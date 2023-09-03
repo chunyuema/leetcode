@@ -1,0 +1,32 @@
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        Map<Integer, Integer> counter = new HashMap<>();
+        for (int num : nums) {
+            counter.computeIfAbsent(num, k -> 0);
+            counter.put(num, counter.get(num)+1);
+        }
+
+        List<List<Integer>> res = new ArrayList<>();
+        backtrackHelper(nums, new ArrayList<>(), res, counter); 
+        return res;
+    }
+
+    private void backtrackHelper(int[] nums, List<Integer> temp, List<List<Integer>> res, Map<Integer, Integer> counter) {
+        if (temp.size() == nums.length) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+
+        for (Map.Entry<Integer, Integer> entry : counter.entrySet()) {
+            int num = entry.getKey(); 
+            int count = entry.getValue();
+            if (count != 0) {
+                temp.add(num);
+                counter.put(num, count-1);
+                backtrackHelper(nums, temp, res, counter);
+                temp.remove(temp.size()-1);
+                counter.put(num, count);
+            }
+        }
+    }
+}
