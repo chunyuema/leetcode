@@ -4,11 +4,13 @@ class Solution {
     }
 
     private boolean dfsHelper(TreeNode node, long min, long max) {
-        if (node == null)
-            return true;
+        if (node == null) return true;
+
         int currVal = node.val;
-        if (currVal >= max || currVal <= min)
-            return false;
+        // check if the current node val breaks the BST requirement
+        if (currVal >= max || currVal <= min) return false;
+
+        // recursively check if the left and the right subtree are also valid BST
         return dfsHelper(node.left, min, currVal) && dfsHelper(node.right, currVal, max);
     }
 }
