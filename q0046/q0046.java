@@ -16,7 +16,11 @@ class Solution {
             if (!used.contains(i)) {
                 temp.add(nums[i]);
                 used.add(i);
+
+                // recursively call the backtrackHelper
                 backTrackHelper(nums, res, temp, used);
+
+                // backtrack step: remove the number added from temp, and from used
                 temp.remove(temp.size() - 1);
                 used.remove(i);
             }
