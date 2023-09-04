@@ -21,6 +21,8 @@ class Solution {
     }
 
     private boolean canCross(int row, int col, int day, int[][] cells) {
+
+        // Initialize the graph on which BFS will be performed
         int[][] currGrid = new int[row][col];
         for (int i = 0; i < day; i++) {
             int[] floodedCell = cells[i];
