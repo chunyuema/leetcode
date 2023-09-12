@@ -19,24 +19,22 @@ class Solution {
         }
 
         while (!queue.isEmpty()) {
-            int[] currCell = queue.poll();
-            int currRow = currCell[0];
-            int currCol = currCell[1];
+            int[] curr = queue.poll();
+            int currRow = curr[0], currCol = curr[1];
             for (int[] d : directions) {
-                int nextRow = currRow + d[0];
-                int nextCol = currCol + d[1];
+                int nextRow = currRow + d[0], nextCol = currCol + d[1];
                 // If the explored cell index is within the boundary
                 if (nextRow >= 0 && nextRow < mat.length && nextCol >= 0 && nextCol < mat[0].length) {
-                    // If a new shorter path to the cell has been found, update its value, and add
-                    // it back to the queue
-                    if (res[nextRow][nextCol] > res[currRow][currCol] + 1) {
-                        res[nextRow][nextCol] = res[currRow][currCol] + 1;
+                    // If a new shorter path to the cell has been found, update its value
+                    int newDist = res[currRow][currCol] + 1;
+                    if (newDist < res[nextRow][nextCol]) {
+                        res[nextRow][nextCol] = newDist;
+                        // Add it back to the queue because this should be rexplored
                         queue.offer(new int[] { nextRow, nextCol });
                     }
                 }
             }
         }
-
         return res;
     }
 }
