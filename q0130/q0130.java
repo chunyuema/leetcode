@@ -5,6 +5,7 @@ class Solution {
         for (int r = 0; r < m; r++) {
             for (int c = 0; c < n; c++) {
                 if (r == 0 || c == 0 || r == m - 1 || c == n - 1) {
+                    // Perform DFS starting from the border cells that are marked as 'O'
                     if (board[r][c] == 'O') {
                         captureNonSurroundedRegions(board, r, c, m, n);
                     }
