@@ -20,11 +20,12 @@ class Solution {
         // loop through other cities to look for the ones that is connected to the
         // current city
         for (int j = 0; j < isConnected.length; j++) {
+            // if j and i are connected, and if j has not been explored, recursively perform
+            // DFS on j to connect all the villages into province
             if (isConnected[i][j] == 1 && isVisited[j] != 1) {
                 dfsHelper(isConnected, isVisited, j);
             }
         }
-
         return;
     }
 }
