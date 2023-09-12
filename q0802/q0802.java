@@ -5,20 +5,19 @@ class Solution {
         boolean[] isChecked = new boolean[n];
         boolean[] isInvestigating = new boolean[n];
 
-        for (int i = 0; i < n; i++) {
-            checkCycle(i, graph, isChecked, isInvestigating);
-        }
+        // start dfs from every node to identify all the unsafe nodes
+        for (int i = 0; i < n; i++)
+            dfsHelper(i, graph, isChecked, isInvestigating);
 
         List<Integer> safeNodes = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            if (!isInvestigating[i]) {
+            if (!isInvestigating[i])
                 safeNodes.add(i);
-            }
         }
         return safeNodes;
     }
 
-    public boolean checkCycle(int currNode, int[][] graph, boolean[] isChecked, boolean[] isInvestigating) {
+    public boolean dfsHelper(int currNode, int[][] graph, boolean[] isChecked, boolean[] isInvestigating) {
 
         // if currNode is already under investigation, there is a cycle
         if (isInvestigating[currNode])
@@ -38,7 +37,7 @@ class Solution {
             // if any of the neighbor node leads to a cycle, return true
             // if return true, we skip the next step which marks the currNode as no longer
             // under investigation
-            if (checkCycle(neighborNode, graph, isChecked, isInvestigating)) {
+            if (dfsHelper(neighborNode, graph, isChecked, isInvestigating)) {
                 return true;
             }
         }
@@ -49,5 +48,4 @@ class Solution {
 
         return false;
     }
-
 }
