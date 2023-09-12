@@ -45,21 +45,21 @@ class Solution {
         }
     }
 
-    private void buildGraphFromTree(TreeNode currNode, TreeNode parentNode, Map<TreeNode, List<TreeNode>> graphedTree) {
+    private void buildGraphFromTree(TreeNode currNode, TreeNode parentNode, Map<TreeNode, List<TreeNode>> graph) {
         // only add the current node and parent node if both of them are not null
         if (currNode != null && parentNode != null) {
-            graphedTree.computeIfAbsent(currNode, k -> new ArrayList<>()).add(parentNode);
-            graphedTree.computeIfAbsent(parentNode, k -> new ArrayList<>()).add(currNode);
+            graph.computeIfAbsent(currNode, k -> new ArrayList<>()).add(parentNode);
+            graph.computeIfAbsent(parentNode, k -> new ArrayList<>()).add(currNode);
         }
 
         // recursively build tree from the left subtree
         if (currNode.left != null) {
-            buildGraphFromTree(currNode.left, currNode, graphedTree);
+            buildGraphFromTree(currNode.left, currNode, graph);
         }
 
         // recursively build tree from the right subtree
         if (currNode.right != null) {
-            buildGraphFromTree(currNode.right, currNode, graphedTree);
+            buildGraphFromTree(currNode.right, currNode, graph);
         }
     }
 }
