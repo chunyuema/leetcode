@@ -1,11 +1,13 @@
 class Solution {
-    public int[] nextGreaterElementForward(int[] nums1, int[] nums2) {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         // get the next great elements of nums2 into a map
         Map<Integer, Integer> map = new HashMap<>();
         Deque<Integer> stack = new ArrayDeque<>();
 
-        // build the monotonic staic through looping forward
+        // build the monotonic increasing stack through looping forward
         for (int currNum : nums2) {
+            // currNum will the next greater element for all the elements on the stack that
+            // is currently smaller than it
             while (!stack.isEmpty() && currNum > stack.peek()) {
                 int prevNum = stack.pop();
                 map.put(prevNum, currNum);
