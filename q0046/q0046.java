@@ -12,8 +12,13 @@ class Solution {
             return;
         }
 
+        // loop from the beginning because ordering matters for backtracking
         for (int i = 0; i < nums.length; i++) {
+
+            // only consider i if it has not been used before
             if (!used.contains(i)) {
+
+                // move ahead: add the num to temp, and mark it as used
                 temp.add(nums[i]);
                 used.add(i);
 
