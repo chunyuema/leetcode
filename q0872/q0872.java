@@ -8,6 +8,7 @@ class Solution {
         return tree1Leaves.equals(tree2Leaves);
     }
 
+    // dfsHelper to get all the leave values
     private void dfsHelper(TreeNode node, List<Integer> leaves) {
         if (node == null)
             return;
