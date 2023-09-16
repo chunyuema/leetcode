@@ -10,27 +10,35 @@ class Solution {
             graph.computeIfAbsent(n2, k -> new ArrayList<>()).add(new Pair<>(n1, succProb[i]));
         }
 
-        // maxProdToNode tracks the maximum probability each node i in the graph
-        double[] maxProbToNode = new double[n];
-        maxProbToNode[start] = 1;
+        // probs tracks the maximum probability each node i in the graph
+        double[] probs = new double[n];
+        probs[start] = 1;
 
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(start);
+        // pq data structure to track the nodes to explore for dijkstra's algo
+        PriorityQueue<Pair<Integer, Double>> pq = new PriorityQueue<>(
+                (p1, p2) -> Double.compare(p2.getValue(), p1.getValue()));
+        pq.offer(new Pair<>(start, 1.0));
 
-        while (!queue.isEmpty()) {
-            int currNode = queue.poll();
+        while (!pq.isEmpty()) {
+            Pair<Integer, Double> curr = pq.poll();
+            int currNode = curr.getKey();
+            double probToCurrNode = curr.getValue();
+
+            // early stopping if we reach the end, this is guaranteed to be the solution
+            if (currNode == end)
+                return probToCurrNode;
+
             for (Pair<Integer, Double> neighbor : graph.getOrDefault(currNode, new ArrayList<>())) {
                 int nextNode = neighbor.getKey();
-                double probToNextNode = neighbor.getValue();
                 // Get the new probability to the next node, and update the prob to the next
                 // node if it is smaller => Need to add the node back to the queue as well
-                double newProbToNextNode = maxProbToNode[currNode] * probToNextNode;
-                if (newProbToNextNode > maxProbToNode[nextNode]) {
-                    maxProbToNode[nextNode] = newProbToNextNode;
-                    queue.add(nextNode);
+                double probToNextNode = probToCurrNode * neighbor.getValue();
+                if (probToNextNode > probs[nextNode]) {
+                    probs[nextNode] = probToNextNode;
+                    pq.offer(new Pair<>(nextNode, probToNextNode));
                 }
             }
         }
-        return maxProbToNode[end];
+        return probs[end];
     }
 }
