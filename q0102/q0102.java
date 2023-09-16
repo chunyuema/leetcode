@@ -7,8 +7,10 @@ class Solution {
         Deque<TreeNode> q = new ArrayDeque<>();
         q.offer(root);
         while (!q.isEmpty()) {
+            // important to get n as this is the number of nodes on the current level
             int n = q.size();
             List<Integer> currLevel = new ArrayList<>();
+            // use n as the condition to terminate the loop
             for (int i = 0; i < n; i++) {
                 TreeNode node = q.poll();
                 currLevel.add(node.val);
