@@ -13,27 +13,35 @@ class Solution {
         }
 
         int minCost = 0;
-        Set<Integer> visited = new HashSet<>();
 
-        // Use a min heap to track which one of the node should be explored the next
-        PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        minHeap.offer(new int[] { 0, 0 });
-        while (visited.size() < n) {
+        // mstNodes tracks everything that is in the minimum spanning tree
+        Set<Integer> mstNodes = new HashSet<>();
 
-            // Get the information of the next node to be exxplore: the one with the minimum cost to extend to
-            int nextNode = (minHeap.peek())[1];
-            int costToNextNode = (minHeap.peek())[0];
-            minHeap.poll();
+        // Use a pq to track which one of the node should be explored the next
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+        pq.offer(new int[] { 0, 0 });
 
-            // Only explore a node if it has not been previously explored
-            if (!visited.contains(nextNode)) {
-                minCost += costToNextNode;
-                visited.add(nextNode);
-                for (int[] pairs : graph.getOrDefault(nextNode, new ArrayList<>())) {
-                    int neighborNode = pairs[1];
-                    int costToNeighbor = pairs[0];
-                    minHeap.offer(new int[] { costToNeighbor, neighborNode });
-                }
+        while (!pq.isEmpty()) {
+            // take a node (with minimum cost to extend to) from the pq to examine
+            int[] curr = pq.poll();
+            int currNode = curr[1];
+            int costToCurrNode = curr[0];
+
+            // if the node is already in the mst, do not explore it again
+            if (mstNodes.contains(currNode))
+                continue;
+
+            // add the cost to the minCost, and add the node to the mst
+            minCost += costToCurrNode;
+            mstNodes.add(currNode);
+            // if we have collected all the nodes, short circuit this and return min cost
+            if (mstNodes.size() == n)
+                return minCost;
+
+            for (int[] pairs : graph.getOrDefault(currNode, new ArrayList<>())) {
+                int nextNode = pairs[1];
+                int costToNextNode = pairs[0];
+                pq.offer(new int[] { costToNextNode, nextNode });
             }
         }
         return minCost;
