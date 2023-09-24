@@ -3,12 +3,12 @@ class Solution
 public:
     int singleNumber(vector<int> &nums)
     {
-        int res = nums[0];
+        int res = 0;
 
         // a ^= a will clear the bits in all positions
-        for (int i = 1; i < nums.size(); i++)
+        for (int num : nums)
         {
-            res ^= nums[i];
+            res ^= num;
         }
         return res;
     }
