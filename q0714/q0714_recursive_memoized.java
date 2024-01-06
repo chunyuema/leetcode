@@ -6,15 +6,15 @@ class Solution {
         return dpHelper(prices, fee, 0, 0, memo);
     }
 
-    // Given a current stock index i, and the status of whether a user has stock
-    // Recursively find out the best profit that is returned if user starts trading
+    // Given a day i and the hasStock status of a person, dpHelper does this:
+    // Recursively find out the max profit that is returned if user starts trading
     private int dpHelper(int[] prices, int fee, int i, int hasStock, int[][] memo) {
 
         // Base Case: If there is no more stock, the max profit is 0
         if (i == prices.length)
             return 0;
 
-        // Memoized step, if dp(i, hasStock) has been computed, return result
+        // Memoized step: If dp(i, hasStock) has been computed, return result
         if (memo[i][hasStock] != -1)
             return memo[i][hasStock];
 
