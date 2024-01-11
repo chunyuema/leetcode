@@ -5,6 +5,7 @@ class Solution {
         int sum = 0;
         int[] balance = new int[gas.length];
         for (int i = 0; i < gas.length; i++) {
+            // pick up gas[i], but spend cost[i] to move to the next stop
             int b = gas[i] - cost[i];
             sum += b;
             balance[i] = b;
