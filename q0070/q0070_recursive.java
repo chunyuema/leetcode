@@ -2,25 +2,26 @@ class Solution {
     public int climbStairs(int n) {
         int[] memo = new int[n + 1];
         Arrays.fill(memo, -1);
-
         return dpHelper(n, memo);
     }
 
+    // Let dpHelper return the number of ways to reach n
     private int dpHelper(int n, int[] memo) {
-        // base cases
+
+        // Base cases
         if (n == 0)
-            return 0;
+            return 1;
         if (n == 1)
             return 1;
-        if (n == 2)
-            return 2;
+
+        // Memoized case
         if (memo[n] != -1)
             return memo[n];
 
-        // recursive case
+        // Recursive case
         int res = dpHelper(n - 1, memo) + dpHelper(n - 2, memo);
 
-        // store the res in memo
+        // Memoization
         memo[n] = res;
         return res;
     }
