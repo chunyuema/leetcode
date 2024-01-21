@@ -1,5 +1,3 @@
-package q0005;
-
 class Solution {
     public String longestPalindrome(String s) {
         if (s.length() == 0)
@@ -21,9 +19,7 @@ class Solution {
     private int expandFromCenter(String s, int l, int r) {
         if (s.length() == 0 || l > r)
             return 0;
-        while (l >= 0 &&
-                r < s.length() &&
-                s.charAt(l) == s.charAt(r)) {
+        while (l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)) {
             l--;
             r++;
         }
