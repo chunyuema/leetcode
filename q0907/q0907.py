@@ -2,22 +2,25 @@ class Solution:
     def sumSubarrayMins(self, arr: List[int]) -> int:
         mod = 10**9 + 7
         n = len(arr)
-
-        stack = []
-        prev_smaller = [1] * n
-        for i in range(n):
-            while stack and arr[i] < stack[-1][0]:
-                prev_smaller[i] += stack.pop()[-1]
-            stack.append((arr[i], prev_smaller[i]))
-
-        stack = []
-        next_smaller = [1] * n
-        for i in range(n - 1, -1, -1):
-            while stack and arr[i] <= stack[-1][0]:
-                next_smaller[i] += stack.pop()[-1]
-            stack.append((arr[i], next_smaller[i]))
-
         res = 0
-        for i in range(n):
-            res += arr[i] * (prev_smaller[i] * next_smaller[i])
-        return res % mod
+
+        stack = []
+        for currIndex in range(n + 1):
+            while stack and (currIndex == n or arr[stack[-1]] >= arr[currIndex]):
+                prevIndex = stack.pop()
+                prevNum = arr[prevIndex]
+
+                # The left boundary is the index of the last number smaller than the prevNum
+                left = stack[-1] if stack else -1
+
+                # The right boundary is the current index as the current number evicted prevNum
+                right = currIndex
+
+                # Calculate prevCount, the number of times that prevNum will be used in the sub of min(b)
+                prevCount = (prevIndex - left) * (right - prevIndex)
+
+                # Update the res
+                res = (res + (prevCount * prevNum)) % mod
+            stack.append(currIndex)
+        
+        return res
