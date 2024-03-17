@@ -9,7 +9,7 @@ class Solution {
                 mergedIntervals.add(currInterval);
             }
 
-            // If the current interval ends after the new interval
+            // If the current interval starts after the new interval
             else if (currInterval[0] > newInterval[1]) {
                 // Add the new interval and set the current interval as new interval
                 mergedIntervals.add(newInterval);
