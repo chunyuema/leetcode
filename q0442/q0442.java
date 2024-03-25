@@ -9,7 +9,7 @@ class Solution {
             }
             // if the num < 0, we are seeing this idx for > 1 times
             else {
-                duplicates.add(Math.abs(nums[i]));
+                duplicates.add(idx + 1);
             }
         }
         return duplicates;
