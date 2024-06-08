@@ -19,6 +19,7 @@ class Solution {
         if (root == null) return view; 
         
         LinkedList<TreeNode> queue = new LinkedList();
+        // Get the right view of the tree (last node of each row)
         queue.add(root);
         while (!queue.isEmpty()) {
             view.add(queue.getLast().val);
