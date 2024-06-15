@@ -1,5 +1,3 @@
-package q0287;
-
 class Solution {
     public int findDuplicate(int[] nums) {
         for (int num : nums) {
