@@ -1,9 +1,10 @@
 class Solution {
     public int minExtraChar(String s, String[] dictionary) {
+        // Let dp[i] represent the min extra characters if we start from index i of the string
         int[] dp = new int[s.length() + 1];
         Set<String> dictionarySet= new HashSet<>(Arrays.asList(dictionary));
         
-
+        
         for (int i = s.length()-1; i >= 0; i--) {
             // skip the current character, and make it one of the leftovers
             int skip = dp[i+1] + 1;
