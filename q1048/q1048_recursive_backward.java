@@ -4,7 +4,9 @@ class Solution {
 
         int[] memo = new int[words.length];
 
-        int maxLen = 1;
+        // Note that since dpHelper(i) represents the longest possible word from index i
+        // It is possible that the longest possible chain can start from any index
+        int maxLen = 0;
         for (int i = 0; i < words.length; i++) {
             maxLen = Math.max(dpHelper(words, i, memo), maxLen);
         }
@@ -12,26 +14,24 @@ class Solution {
         return maxLen;
     }
 
+    // Let dpHelper(i) represent the longest chain up until index i
     private int dpHelper(String[] words, int i, int[] memo) {
         // base case: if i = 0, the longest sequence is just 1
-        if (i == 0)
-            return 1;
+        if (i == 0) return 1;
 
         // memoized case: if we have previously computed it, just return the answer
-        if (memo[i] != 0)
-            return memo[i];
+        if (memo[i] != 0) return memo[i];
 
         // recursive case
-        int ans = 1;
+        // dpHelper(i) = 1 + for max (all dpHelper(j) such that words[j] is a predecessor of words[i])
+        memo[i] = 1;
         for (int j = 0; j < i; j++) {
             if (isPredecessor(words[j], words[i])) {
-                ans = Math.max(dpHelper(words, j, memo) + 1, ans);
+                memo[i] = Math.max(memo[i], dpHelper(words, j, memo) + 1);
             }
         }
 
-        // put the ans in memo before returning the ans
-        memo[i] = ans;
-        return ans;
+        return memo[i];
     }
 
     // return if s1 is a valid precessor of s2
