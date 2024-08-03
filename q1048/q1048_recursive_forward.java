@@ -1,53 +1,58 @@
 class Solution {
     public int longestStrChain(String[] words) {
-        Arrays.sort(words, (s1, s2) -> s1.length() - s2.length());
+        // Sort words by their length (shortest to longest)
+        Arrays.sort(words, (a, b) -> a.length() - b.length());
 
         int[] memo = new int[words.length];
+        Arrays.fill(memo, -1);
 
         // Note that since dpHelper(i) represents the longest possible word from index i
         // It is possible that the longest possible chain can start from any index
-        int maxLen = 0;
+        int maxChainLength = 0;
         for (int i = 0; i < words.length; i++) {
-            maxLen = Math.max(dpHelper(words, i, memo), maxLen);
+            maxChainLength = Math.max(maxChainLength, dpHelper(words, i, memo));
         }
-
-        return maxLen;
+        return maxChainLength;
     }
 
-    // Let dpHelper(i) represent the longest chain up until index i
+    // Let dpHelper(i) represent the longest possible word chain starting from index i
     private int dpHelper(String[] words, int i, int[] memo) {
-        // base case: if i = 0, the longest sequence is just 1
-        if (i == 0) return 1;
+        // Base case
+        if (i == words.length) return 1; 
 
-        // memoized case: if we have previously computed it, just return the answer
-        if (memo[i] != 0) return memo[i];
+        // Memoized case
+        if (memo[i] != -1) return memo[i];
 
-        // recursive case
-        // dpHelper(i) = 1 + for max (all dpHelper(j) such that words[j] is a predecessor of words[i])
+        // Recursive case: 
+        // dpHelper(i) = 1 + for max (all dpHelper(j) such that words[i] is a predecessor of words[j])
         memo[i] = 1;
-        for (int j = 0; j < i; j++) {
-            if (isPredecessor(words[j], words[i])) {
-                memo[i] = Math.max(memo[i], dpHelper(words, j, memo) + 1);
+        for (int j = i + 1; j < words.length; j++) {
+            // Check if words[i] is a predecessor of words[j]
+            if (isPredecessor(words[i], words[j])) {
+                memo[i] = Math.max(memo[i], 1 + dpHelper(words, j, memo));
             }
         }
-
         return memo[i];
     }
 
-    // return if s1 is a valid precessor of s2
+    // Check if s1 is a predecessor of s2
     private boolean isPredecessor(String s1, String s2) {
-        if (s1.length() + 1 != s2.length())
-            return false;
-        int p1 = 0;
-        int p2 = 0;
-        while (p2 < s2.length()) {
-            if (p1 < s1.length() && s1.charAt(p1) == s2.charAt(p2)) {
-                p1++;
-                p2++;
+        if (s1.length() + 1 != s2.length()) return false;
+        
+        int i = 0, j = 0;
+        boolean foundDifference = false;
+        
+        while (i < s1.length() && j < s2.length()) {
+            if (s1.charAt(i) == s2.charAt(j)) {
+                i++;
+                j++;
             } else {
-                p2++;
+                if (foundDifference) return false;
+                foundDifference = true;
+                j++;
             }
         }
-        return p1 + 1 == p2;
+        
+        return true;
     }
 }
