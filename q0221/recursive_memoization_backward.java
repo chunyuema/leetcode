@@ -20,9 +20,11 @@ class Solution {
 
     // dpHelper returns the max square side length ending at (i, j)
     private int dpHelper(char[][] matrix, int i, int j) {
-        // Base case: 
+        // Base case: If we are on the first row or the first column
+        // the max value of max sqaure is the cell itself 
         if (i == 0 || j == 0) return matrix[i][j] == '1' ? 1 : 0;
-        // If we've already computed the value, return it
+        
+        // Memoized case: If we've already computed the value, return it
         if (memo[i][j] != -1) return memo[i][j];
 
         memo[i][j] = 0;
@@ -31,9 +33,9 @@ class Solution {
             int up = dpHelper(matrix, i - 1, j);
             int left = dpHelper(matrix, i, j - 1);
             int diagonal = dpHelper(matrix, i - 1, j - 1);
-            memo[i][j] = 1 + Math.min(Math.min(up, left), diagonal); // side length of the largest square ending at (i, j)
+            // side length of the largest square ending at (i, j)
+            memo[i][j] = 1 + Math.min(Math.min(up, left), diagonal); 
         }
-
         return memo[i][j];
     }
 }
