@@ -1,37 +1,39 @@
 class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
-        // Let dp[i] represent the largest subset until index i
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, 1);
-        Arrays.sort(nums);
+        Arrays.sort(nums); // Sort the numbers to facilitate the subset condition
 
-        // Track where the largest size of the subset
-        int maxSize = 1;
-        // Track the index of the largest number in the subset
+        // dp[i] = largest subset ending in index i
+        int[] dp = new int[nums.length];
+        // prev[i] = index of the previous number
+        int[] prev = new int[nums.length];
+
+        Arrays.fill(dp, 1); 
+        Arrays.fill(prev, -1);
+
+        // index of last element of the largest subset
         int maxIndex = 0;
+
         for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] % nums[j] == 0) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                    if (dp[i] > maxSize) {
-                        maxSize = dp[i];
-                        maxIndex = i;
+                    int len = dp[j] + 1;
+                    if (len > dp[i]) {
+                        dp[i] = len;
+                        prev[i] = j;
                     }
                 }
             }
+            // update the maxIndex;
+            maxIndex = dp[i] > dp[maxIndex] ? i : maxIndex;
         }
 
-        // Reconstruct the answer
+        // Reconstruct the final solution
         List<Integer> res = new ArrayList<>();
-        int prevNum = nums[maxIndex];
-        for (int i = maxIndex; i >= 0; i--) {
-            int currNum = nums[i];
-            if (prevNum % currNum == 0 && dp[i] == maxSize) {
-                res.add(currNum);
-                prevNum = currNum;
-                maxSize--;
-            }
+        while (maxIndex >= 0) {
+            res.add(nums[maxIndex]);
+            maxIndex = prev[maxIndex];
         }
         return res;
     }
+
 }
