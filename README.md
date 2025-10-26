@@ -4,10 +4,13 @@ This repository contains coding interview questions and their solutions in diffe
 
 ## Usage
 
-Thie repository organizes source code only. In the following two notion pages, I organized the questions based on data structure, algorithm, techniques, level of difficulties. Please refer to them if you would like to prepare for interviews, or if you would like to learn about algorithms / data structure:
+Thie repository organizes the source codes which pass the test cases provided by the LeetCode platform. 
 
-- Algorithms [Notion Page](https://chunyuema.notion.site/Algorithms-8fbfe977e63647098229b1c258d76cd6?pvs=4)
-- Data Structures [Notion Page](https://chunyuema.notion.site/Data-Structures-c31688e4a1bc43539afd07f657ec87aa?pvs=4)
+In the following leetcode question bank [notion page](https://springbound.notion.site/leetcode-question-bank) contains more information
+- Question / Problem description
+- Insights: Data structures / Algorithms used to solve the question
+- Algorithm Overview: Walkthrough of the code implementation
+- Complexity Analysis: Time and space complexity analysis
 
 ## Contributing
 
